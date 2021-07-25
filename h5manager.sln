@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.329
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "h5manager", "h5manager.csproj", "{75FC45BF-8DC9-47A5-AE27-AD279751D9A1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{75FC45BF-8DC9-47A5-AE27-AD279751D9A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75FC45BF-8DC9-47A5-AE27-AD279751D9A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75FC45BF-8DC9-47A5-AE27-AD279751D9A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75FC45BF-8DC9-47A5-AE27-AD279751D9A1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {96B185C9-13C5-47FE-8C8F-B9BB77BB98AF}
+	EndGlobalSection
+EndGlobal
