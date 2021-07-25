@@ -485,7 +485,7 @@ namespace h5manager
             this.richTextBox1.Size = new System.Drawing.Size(254, 238);
             this.richTextBox1.TabIndex = 1;
             this.richTextBox1.Text = "使用说明\n\n更新样板：将样板复制入template目录下，注意不要嵌套文件夹。已导入工程会自动使用该样板。\n\n若要查看离线版帮助文档，请至少启动一个工程。\n\n部分" +
-    "工具需要指定对应工程，请打开文件夹后自行使用。";
+    "工具需要指定对应工程，请打开文件夹后自行使用。\n\n注意：若要改变位置，请勿直接移动，而是复制后并使用系统的导入功能！";
             this.richTextBox1.ZoomFactor = 1.5F;
             // 
             // Form1
