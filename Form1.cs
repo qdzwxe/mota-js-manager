@@ -595,6 +595,67 @@ namespace h5manager
 
             openUrl(url);
         }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            DialogResult dr = MessageBox.Show("迁移本工具或修改过存储目录后，可尝试对工程进行修复，是否继续？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            if (dr == DialogResult.Yes)
+            {
+                foreach (DirectoryInfo dir in dire)
+                {
+                    string path = "projects\\" + dir.ToString();
+                    foreach (string di in toBeLinked_dir)
+                    {
+                        string path1 = path + "\\" + di;
+                        int l1 = 0;
+                        int l2 = 0;
+
+                        if (Directory.Exists(path1))
+                        {
+                           // bool deleted = false;
+                            try
+                            {
+                                l1 = Directory.GetDirectories(path1).Length;
+                                l2 = Directory.GetFiles(path1).Length;
+                            }
+                            catch
+                            {
+
+                            }
+                            finally
+                            {
+                                //Directory.Delete(path1);
+                                //deleted = true;
+                            }
+                            if (!(l1 > 0 || l2 > 0)) Directory.Delete(path1);
+                        }
+                        //Directory.
+                        if (!(l1 > 0 || l2 > 0))
+                        {
+                            string cmds = "";
+                            if (Directory.Exists("template\\" + di))
+                            {
+                                string cmd = "mklink /j ";
+                                cmd += Application.StartupPath + "\\" + path1 + " ";
+                                cmd += Application.StartupPath + "\\template\\" + di;
+                                cmds += cmd + "\n";
+                                //MessageBox.Show(cmd);
+
+                            }
+                            runCmd(cmds);
+
+                        }                      
+                    }
+
+                }
+                MessageBox.Show("修复完毕。若仍不能使用，请使用导入功能再次修复！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
+            else
+            {
+
+            }
+        }
     }
 
 }

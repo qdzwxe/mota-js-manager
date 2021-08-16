@@ -67,6 +67,7 @@ namespace h5manager
             this.button17 = new System.Windows.Forms.Button();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.button11 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -238,6 +239,7 @@ namespace h5manager
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.button11);
             this.tabPage1.Controls.Add(this.button3);
             this.tabPage1.Controls.Add(this.label3);
             this.tabPage1.Controls.Add(this.listBox1);
@@ -485,8 +487,19 @@ namespace h5manager
             this.richTextBox1.Size = new System.Drawing.Size(254, 238);
             this.richTextBox1.TabIndex = 1;
             this.richTextBox1.Text = "使用说明\n\n更新样板：将样板复制入template目录下，注意不要嵌套文件夹。已导入工程会自动使用该样板。\n\n若要查看离线版帮助文档，请至少启动一个工程。\n\n部分" +
-    "工具需要指定对应工程，请打开文件夹后自行使用。\n\n注意：若要改变位置，请勿直接移动，而是复制后并使用系统的导入功能！";
+    "工具需要指定对应工程，请打开文件夹后自行使用。\n\n注意：改变位置或修改路径后，请先使用“修复工程”功能后再启动服务！";
             this.richTextBox1.ZoomFactor = 1.5F;
+            // 
+            // button11
+            // 
+            this.button11.Location = new System.Drawing.Point(8, 46);
+            this.button11.Margin = new System.Windows.Forms.Padding(2);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(97, 27);
+            this.button11.TabIndex = 23;
+            this.button11.Text = "修复工程";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
             // Form1
             // 
@@ -556,6 +569,7 @@ namespace h5manager
         private System.Windows.Forms.Button button17;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.Button button11;
     }
 }
 
