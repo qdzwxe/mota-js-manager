@@ -37,6 +37,7 @@ namespace h5manager
         private Dictionary<string, int> opened = new Dictionary<string, int>();
         private List<HttpServer> httpServers = new List<HttpServer>();
         private List<Thread> threads = new List<Thread>();
+        private List<MyRoute> myRoutes = new List<MyRoute>();
 
         //private List<string> files = new List<string>();
         private string[] toBeCopied_file = { "editor.html", "editor-mobile.html", "index.html", "logo.png", "main.js", "runtime.d.ts", "styles.css", "启动服务.exe", "server.py", "B站视频教程.url" };
@@ -338,19 +339,20 @@ namespace h5manager
 
 
                     //url = "http://127.0.0.1:" + port + "/";
+                    myRoutes.Add(new MyRoute());
 
                     // 启动
                     httpServers.Add(new HttpServer(port, new List<Route>()
                     {
                         new Route()
                         {
-                            Callable = new FileSystemRouteHandler() {BasePath =path1, ShowDirectories = true}.Handle,
+                            Callable = myRoutes[myRoutes.Count-1].getHandler,
                             UrlRegex = "^/(.*)$",
                             Method = "GET"
                         },
                         new Route()
                         {
-                            Callable = MyRoute.route,
+                            Callable = myRoutes[myRoutes.Count-1].postHandler,
                             UrlRegex = "^/(.*)$",
                             Method = "POST"
                         },
@@ -459,7 +461,7 @@ namespace h5manager
                 threads.RemoveAt(num);
                 listBox1.Items.RemoveAt(num);
                 opened.Remove(text);
-
+                myRoutes.RemoveAt(num);
 
             }
             else

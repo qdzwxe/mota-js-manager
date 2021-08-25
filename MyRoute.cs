@@ -4,12 +4,70 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using SimpleHttpServer.Models;
+using SimpleHttpServer.RouteHandlers;
 
 namespace h5manager
 {
     class MyRoute
     {
-        public static HttpResponse route(HttpRequest request)
+        private static string basePath = "projects/" + Form1.proj;
+        private FileSystemRouteHandler handler = new FileSystemRouteHandler() { BasePath = basePath, ShowDirectories = true };
+
+        public HttpResponse getHandler(HttpRequest request)
+        {
+            if (request.Path.StartsWith("__all_floors__.js"))
+            {
+                var ids = request.Path.IndexOf("&id=");
+                if (ids >= 0)
+                {
+                    string[] floorIds = request.Path.Substring(ids + 4).Split(',');
+                    var content = "";
+                    foreach (string floorId in floorIds)
+                    {
+                        string filename = basePath + "/project/floors/" + floorId + ".js";
+                        if (!File.Exists(filename))
+                        {
+                            return new HttpResponse()
+                            {
+                                ContentAsUTF8 = "Request Not found.",
+                                ReasonPhrase = "Not Found",
+                                StatusCode = "404",
+                            };
+                        }
+                        content += File.ReadAllText(filename, Encoding.UTF8) + "\n";
+                    }
+                    return new HttpResponse()
+                    {
+                        ContentAsUTF8 = content,
+                        StatusCode = "200",
+                        ReasonPhrase = "OK"
+                    };
+                }
+
+            }
+            if (request.Path.StartsWith("__all_animates__"))
+            {
+                var ids = request.Path.IndexOf("&id=");
+                if (ids >= 0)
+                {
+                    string[] floorIds = request.Path.Substring(ids + 4).Split(',');
+                    var content = new List<string>();
+                    foreach (string floorId in floorIds)
+                    {
+                        string filename = basePath + "/project/animates/" + floorId + ".animate";
+                        content.Add(File.Exists(filename) ? File.ReadAllText(filename, Encoding.UTF8) : "");
+                    }
+                    return new HttpResponse()
+                    {
+                        ContentAsUTF8 = string.Join("@@@~~~###~~~@@@", content),
+                        StatusCode = "200",
+                        ReasonPhrase = "OK"
+                    };
+                }
+            }
+            return handler.Handle(request);
+        }
+        public HttpResponse postHandler(HttpRequest request)
         {
             //Console.WriteLine(Form1.proj);
             string[] strings = request.Content.Split('&');
@@ -62,7 +120,7 @@ namespace h5manager
 
             string type = dictionary["type"];
             if (type == null || !type.Equals("base64")) type = "utf8";
-            string filename = "projects/" + Form1.proj + "/" + dictionary["name"];
+            string filename = basePath + "/" + dictionary["name"];
             if (filename == null || !File.Exists(filename))
             {
                 return new HttpResponse()
@@ -85,7 +143,7 @@ namespace h5manager
         {
             string type = dictionary["type"];
             if (type == null || !type.Equals("base64")) type = "utf8";
-            string filename = "projects/" + Form1.proj + "/" + dictionary["name"], content = dictionary["value"];
+            string filename = basePath + "/" + dictionary["name"], content = dictionary["value"];
             byte[] bytes;
             if (type == "base64")
                 bytes = Convert.FromBase64String(content);
@@ -102,7 +160,7 @@ namespace h5manager
 
         private static HttpResponse writeMultiFilesHandler(Dictionary<String, String> dictionary)
         {
-            string filename = "projects/" + Form1.proj + "/" + dictionary["name"], content = dictionary["value"];
+            string filename = basePath + "/" + dictionary["name"], content = dictionary["value"];
 
             string[] filenames = filename.Split(';'), contents = content.Split(';');
             long length = 0;
@@ -124,7 +182,7 @@ namespace h5manager
 
         private static HttpResponse listFileHandler(Dictionary<string, string> dictionary)
         {
-            string name = "projects/" + Form1.proj + "/" + dictionary["name"];
+            string name = basePath + "/" + dictionary["name"];
             if (name == null || !Directory.Exists(name))
             {
                 return new HttpResponse()
@@ -148,7 +206,7 @@ namespace h5manager
 
         private static HttpResponse makeDirHandler(Dictionary<string, string> dictionary)
         {
-            string name = "projects/" + Form1.proj + "/" + dictionary["name"];
+            string name = basePath + "/" + dictionary["name"];
             if (Directory.Exists(name))
             {
                 return new HttpResponse()
@@ -224,7 +282,7 @@ namespace h5manager
 
         private static HttpResponse deleteFileHandler(Dictionary<String, String> dictionary)
         {
-            string filename = "projects/" + Form1.proj + "/" + dictionary["name"];
+            string filename = basePath + "/" + dictionary["name"];
             if (filename == null || !(File.Exists(filename) || Directory.Exists(filename)))
             {
                 return new HttpResponse()
