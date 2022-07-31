@@ -42,7 +42,7 @@ namespace h5manager
         //private List<string> files = new List<string>();
         private string[] toBeCopied_file = { "editor.html", "editor-mobile.html", "index.html", "logo.png", "main.js", "runtime.d.ts", "styles.css", "启动服务.exe", "server.py", "B站视频教程.url" };
         private string[] toBeCopied_dir = { "project" };
-        private string[] toBeLinked_dir = { "_docs", "_server", "extensions", "libs", "常用工具" }; //, "project"
+        private string[] toBeLinked_dir = { "_docs", "_server", "extensions", "libs", "常用工具","_codelab" }; //, "project"
 
         public static string proj;
 
